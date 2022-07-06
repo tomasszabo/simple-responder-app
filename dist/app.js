@@ -6,9 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const https_1 = __importDefault(require("https"));
 const app = (0, express_1.default)();
+const appIdentifier = process.env.APP_IDENTIFIER || 'local';
 const port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
-    res.send('Hello World!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">');
+    res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">`);
 });
 app.get('/outbound', (req, res) => {
     const options = {
