@@ -8,6 +8,10 @@ app.get('/', (req, res) => {
   res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="outbound" style="border:0;">`);
 });
 
+app.get('/time', (req, res) => {
+  res.send(`${new Date().toISOString()}`);
+});
+
 app.get('/outbound', (req, res) => {
   const options = {
 		hostname: 'api.ipify.org',
