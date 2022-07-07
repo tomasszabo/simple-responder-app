@@ -5,6 +5,7 @@ import sql from 'mssql';
 const app = express();
 const appIdentifier = process.env.APP_IDENTIFIER || 'local';
 const port = process.env.PORT || 3000;
+const sqlConnectionString = process.env.SQL_CONNECTION_STRING;
 
 app.get('/', (req, res) => {
   res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">`);
@@ -38,21 +39,8 @@ app.get('/outbound', (req, res) => {
 });
 
 app.get('/database', async (req, res) => {
-	const  config: sql.config = {
-		user: 'sqladmin', 
-		password: '$cwW5Hz0eo2gGXiQxeN', 
-		server: 'pservices-sql-server-01.database.windows.net',
-		database: 'pservices-sql-db-01',
-		options: {
-			trustedConnection: true,
-			enableArithAbort: true,
-			encrypt: true
-		},
-		port: 1433
-	}
-
   try {
-    const pool = await sql.connect(config);
+    const pool = await sql.connect(sqlConnectionString);
     const persons = await pool.request().query("SELECT * from Persons");
   
 		res.setHeader('Content-Type', 'application/json');
