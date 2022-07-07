@@ -38,13 +38,13 @@ app.get('/outbound', (req, res) => {
 });
 
 app.get('/database', async (req, res) => {
-	const  config = {
+	const  config: sql.config = {
 		user: 'sqladmin', 
 		password: '$cwW5Hz0eo2gGXiQxeN', 
 		server: 'pservices-sql-server-01.database.windows.net',
 		database: 'pservices-sql-db-01',
 		options: {
-			trustedconnection: true,
+			trustedConnection: true,
 			enableArithAbort: true,
 			encrypt: true
 		},
