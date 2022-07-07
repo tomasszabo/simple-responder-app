@@ -18,8 +18,9 @@ const mssql_1 = __importDefault(require("mssql"));
 const app = (0, express_1.default)();
 const appIdentifier = process.env.APP_IDENTIFIER || 'local';
 const port = process.env.PORT || 3000;
+const sqlConnectionString = process.env.SQL_CONNECTION_STRING;
 app.get('/', (req, res) => {
-    res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">`);
+    res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="outbound" style="border:0;">`);
 });
 app.get('/time', (req, res) => {
     res.send(`${new Date().toISOString()}`);
@@ -43,20 +44,8 @@ app.get('/outbound', (req, res) => {
     call.end();
 });
 app.get('/database', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const config = {
-        user: 'sqladmin',
-        password: '$cwW5Hz0eo2gGXiQxeN',
-        server: 'pservices-sql-server-01.database.windows.net',
-        database: 'pservices-sql-db-01',
-        options: {
-            trustedconnection: true,
-            enableArithAbort: true,
-            encrypt: true
-        },
-        port: 1433
-    };
     try {
-        const pool = yield mssql_1.default.connect(config);
+        const pool = yield mssql_1.default.connect(sqlConnectionString);
         const persons = yield pool.request().query("SELECT * from Persons");
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(persons.recordset));
