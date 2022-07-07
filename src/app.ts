@@ -19,7 +19,7 @@ app.get('/outbound', (req, res) => {
   const options = {
 		hostname: 'api.ipify.org',
 		port: 443,
-		path: '/?format=json',
+		path: '/?format=json', 
 		method: 'GET',
 	};
 
