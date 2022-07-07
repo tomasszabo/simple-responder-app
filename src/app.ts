@@ -8,18 +8,18 @@ const port = process.env.PORT || 3000;
 const sqlConnectionString = process.env.SQL_CONNECTION_STRING;
 
 app.get('/', (req, res) => {
-  res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">`);
+	res.send(`Hello ${appIdentifier}!<br/><br/><br/>Outbound IP:<br/><iframe src="/outbound" style="border:0;">`);
 });
 
 app.get('/time', (req, res) => {
-  res.send(`${new Date().toISOString()}`);
+	res.send(`${new Date().toISOString()}`);
 });
 
 app.get('/outbound', (req, res) => {
-  const options = {
+	const options = {
 		hostname: 'api.ipify.org',
 		port: 443,
-		path: '/?format=json', 
+		path: '/?format=json',
 		method: 'GET',
 	};
 
@@ -39,18 +39,18 @@ app.get('/outbound', (req, res) => {
 });
 
 app.get('/database', async (req, res) => {
-  try {
-    const pool = await sql.connect(sqlConnectionString);
-    const persons = await pool.request().query("SELECT * from Persons");
-  
+	try {
+		const pool = await sql.connect(sqlConnectionString);
+		const persons = await pool.request().query("SELECT * from Persons");
+
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify(persons.recordset));
-  }
-  catch (error) {
-    res.send(error);
-  }
+	}
+	catch (error) {
+		res.send(error);
+	}
 });
 
 app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+	return console.log(`Express is listening at http://localhost:${port}`);
 });
