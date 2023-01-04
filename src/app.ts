@@ -15,6 +15,29 @@ app.get('/time', (req, res) => {
 	res.send(`${new Date().toISOString()}`);
 });
 
+app.get('/users', (req, res) => {
+	const options = {
+		hostname: 'jsonplaceholder.typicode.com',
+		port: 443,
+		path: '/users',
+		method: 'GET',
+	};
+
+	res.setHeader('Content-Type', 'application/json');
+
+	const call = https.request(options, response => {
+		response.on('data', d => {
+			res.send(d.toString());
+		});
+	});
+
+	call.on('error', error => {
+		res.send(error);
+	});
+
+	call.end();
+});
+
 app.get('/outbound', (req, res) => {
 	const options = {
 		hostname: 'api.ipify.org',
@@ -23,7 +46,7 @@ app.get('/outbound', (req, res) => {
 		method: 'GET',
 	};
 
-	res.setHeader('Content-Type', 'text/plain');
+	res.setHeader('Content-Type', 'application/json');
 
 	const call = https.request(options, response => {
 		response.on('data', d => {
