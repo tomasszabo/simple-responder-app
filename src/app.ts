@@ -53,7 +53,8 @@ app.get('/database', async (req, res) => {
 
 app.get('/users', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	res.send(`[{
+	res.send(`[
+		{
 			"id": 1,
 			"name": "Leanne Graham",
 			"username": "Bret",
